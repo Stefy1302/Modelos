@@ -21,7 +21,6 @@ public class Main {
         ron.display();
         ron.performSpells();
 
-            // Changing Hermione's Spells at runtime
         hermione.setSpellBehavior(new SpellOculusReparo());
 
         hermione.display();

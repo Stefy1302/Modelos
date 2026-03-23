@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package Interface;
+package components;
 
 /**
  *
- * @author Estudiantes
+ * @author MyM
  */
-public interface BaristaObserver {
-    void update(String varietal,String notes,String origin,int altitude,String producer,int quantity);
+public interface Mediator {
+    void send(String message, Device sender);
+    void registerDevice(Device device);
 }

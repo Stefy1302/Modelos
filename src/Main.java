@@ -1,40 +1,50 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        Vehiculo picantoBase = new PicantoBase();
+        TextEditor editor = new TextEditor();
+        History gestor = new History();
+        Scanner sc = new Scanner(System.in);
+        int opcion;
 
-        Vehiculo vibrantMT = new VibrantMT();
-        vibrantMT = new Alarmas(vibrantMT);
+        do {
+            System.out.println("\n--- GESTIÓN DE ESTADOS (MEMENTO) ---");
+            System.out.println("Texto actual: " + (editor.getContenido() == null ? "[Vacío]" : editor.getContenido()));
+            System.out.println("1. Modificar texto");
+            System.out.println("2. Guardar versión (Checkpoint)");
+            System.out.println("3. Ver historial y restaurar");
+            System.out.println("4. Salir");
+            System.out.print("Opción: ");
+            opcion = sc.nextInt();
+            sc.nextLine(); 
 
-        Vehiculo zenithMT = new ZenithMT();
-        zenithMT = new CubreBaul(zenithMT);
-        zenithMT = new KitAlarma(zenithMT);
-
-        Vehiculo zenithAT = new ZenithAT();
-        zenithAT = new KitAmpliacionLateral(zenithAT);
-        zenithAT = new MallaCarga(zenithAT);
-        zenithAT = new PernosSeguridad(zenithAT);
-
-        Vehiculo gtLineAT = new GTLineAT();
-        gtLineAT = new PortaBicis(gtLineAT);
-        gtLineAT = new RIn(gtLineAT);
-        gtLineAT = new SensorParqueo(gtLineAT);
-        gtLineAT = new Tapetes(gtLineAT);
-        gtLineAT = new TiroArrastre(gtLineAT);
-
-        // pruebas
-        System.err.println("Pueba 1: Base sin accesorios");
-        System.out.println(picantoBase.getDescripcion() + " - Costo: $" + picantoBase.costo());
-
-        System.err.println("\nPueba 2: Vibrant MT con alarma");
-        System.out.println(vibrantMT.getDescripcion() + " - Costo: $" + vibrantMT.costo());
-
-        System.err.println("\nPueba 3: Zenith MT con cubre baúl y kit alarma");
-        System.out.println(zenithMT.getDescripcion() + " - Costo: $" + zenithMT.costo());
-
-        System.err.println("\nPueba 4: Zenith AT con kit ampliación lateral, malla de carga y pernos de seguridad");
-        System.out.println(zenithAT.getDescripcion() + " - Costo: $" + zenithAT.costo());
-
-        System.err.println("\nPueba 5: GT Line AT con porta bicis, rines de aleación, sensor de parqueo, tapetes y tiro de arrastre");
-        System.out.println(gtLineAT.getDescripcion() + " - Costo: $" + gtLineAT.costo());
+            switch (opcion) {
+                case 1 -> {
+                    System.out.print("Escriba el nuevo contenido: ");
+                    editor.setContenido(sc.nextLine());
+                }
+                case 2 -> {
+                    gestor.añadirMemento(editor.guardar());
+                    System.out.println("¡Versión guardada correctamente!");
+                }
+                case 3 -> {
+                    if (gestor.getCantidadEstados() == 0) {
+                        System.out.println("No hay versiones guardadas.");
+                    } else {
+                        System.out.println("Versiones disponibles:");
+                        for (int i = 0; i < gestor.getCantidadEstados(); i++) {
+                            System.out.println(i + ": " + gestor.getMemento(i).getEstadoGuardado());
+                        }
+                        System.out.print("Seleccione el índice a restaurar: ");
+                        int indice = sc.nextInt();
+                        editor.restaurar(gestor.getMemento(indice));
+                        System.out.println("Estado restaurado.");
+                    }
+                }
+                case 4 -> System.out.println("Finalizando programa.");
+            }
+        } while (opcion != 4);
+        
+        sc.close();
     }
 }

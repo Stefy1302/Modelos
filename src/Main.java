@@ -1,27 +1,23 @@
- /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-import Observer.Barista;
-import Subject.CoffeCooperative;
-/**
- *
- * @author Estudiantes
- */
 public class Main {
-    public static void main(String[] args){
-        CoffeCooperative cooperative = new CoffeCooperative();
-        
-        Barista barist1 = new Barista("Alan", 54);
-        Barista barist2 = new Barista("Dan", 50);
-        
-        cooperative.suscribe(barist2);
-        cooperative.suscribe(barist1);
-        
-        cooperative.registerNewLot("Pink bourbon"," Red fruits, caramel, medium-high cidity", "Acevedo huila", 1250, "Peter Gomez", 45);
-        
-        cooperative.unsuscribe(barist1);
-        
-        cooperative.registerNewLot("Geisha","Jasmine and citrus notes", "Quindio", 1800, "Yeremi salazar", 20);
+    public static void main(String[] args) {
+        PrototypeRegistry registry = new PrototypeRegistry();
+
+        registry.addPrototype("Warrior_Base", new Warrior("Prototipo Guerrero", 1, 150, 50));
+        registry.addPrototype("Mage_Base", new Mage("Prototipo Mago", 1, 80, 150));
+
+        GameCharacter warrior1 = registry.getPrototype("Warrior_Base");
+        warrior1.setName("Aragorn");
+        warrior1.setLevel(10);
+
+        GameCharacter warrior2 = registry.getPrototype("Warrior_Base");
+        warrior2.setName("Boromir");
+
+        GameCharacter mage1 = registry.getPrototype("Mage_Base");
+        mage1.setName("Gandalf");
+
+        System.out.println("Personajes creados mediante Prototype:");
+        System.out.println(warrior1);
+        System.out.println(warrior2);
+        System.out.println(mage1);
     }
 }
